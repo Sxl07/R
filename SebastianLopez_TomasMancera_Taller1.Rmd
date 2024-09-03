@@ -1,0 +1,173 @@
+---
+title: "Inferencia Estadística Taller 1"
+author: "Sebastián López Montenegro (97500) - Tomás Mancera Villa (98649)"
+date: "2024-08-28"
+output:
+  pdf_document: default
+  html_document: default
+subtitle: Universidad de San Buenaventura Cali
+---
+
+<div style="text-align: justify; font-family: 'Times New Roman';">
+
+# Punto 1
+
+```{r}
+factorial = function(n){
+  if (n == 0 || n==1 ){
+    return(1)
+  }else{
+    return(n*factorial(n-1))
+  }
+}
+numeros=c(5,7,10)
+for (i in numeros){
+  result=sprintf("%d! = %d",i,factorial(i))
+  print(result)
+}
+```
+
+Para el primer punto se creó una función factorial de manera recursiva tomando como caso base los números "0" y "1". Entendiendo el código más a fondo se entiende como el factorial de un número "n" a la multiplicación de todos los números anteriores(incluyéndose el mismo número), o también visto de otra forma como un productorio desde 1 hasta el número a calcular. Por ejemplo: 5! = 5 * 4 * 3 * 2 * 1 = 120. Para los demás casos en que el número es mayor a 1 y discreto, se hace la multiplicación de dicho número por el número anterior a él, de esta manera se inicia en el valor de número a calcular e inicia a calcular el factorial de todos los números anteriores hasta llegar al caso base que en este caso es 1.
+
+Se usó la función sprintf para darle un formato a la cadena de caracteres para luego ser impresa, esto principalmente porque se prefiere trabajar con formato en vez de trabajar con la función paste0.
+
+
+
+# Punto 2
+
+```{r}
+parOImpar = function(n){
+  if(n%%2==0){
+    return("Par")
+  }else{
+    return("Impar")
+  }
+}
+numerosAleatorios = sample(1:100,10)
+for (i in numerosAleatorios){
+  result=sprintf("El numero %d es %s",i,parOImpar(i))
+  print(result)
+}
+```
+
+Para el segundo punto se creó una función para determinar si un número "n" es par o impar, usando el concepto de residuo como punto clave para determinar si un número es divisible por "2". Para esto se recurre al operador MOD el cual sirve para dividir un número A entre un número B y saber cuál es su residuo, en este caso, A sería cada uno de los números a evaluar y B sería 2, teniendo como resultado AMOD2(A%2). Si este resultado es 0 quiere decir que el residuo es 0,por tanto, divisible por 2 y se imprime la palabra "Par", por el contrario, si el resultado es 0 quiere decir que valor del residuo es 1 y se imprime la palabra "Impar"
+
+Para la generación de los números aleatorios en el segundo punto se usó la función "sample" que permite crear "x" cantidad de números en un rango.
+
+Finalmente, para calcular si los números generados son pares o impares, se evalúa cada número mediante un ciclo usando dentro de este la función creada.
+
+
+
+# Punto 3
+
+```{r}
+letras=matrix(c("s","e","b","a","s","t","i","a","n"),nrow = 9,ncol = 1)
+vocales=c("A","E","I","O","U")
+result=matrix(0,nrow = 9,ncol = 2)
+for(i in 1:length(letras)){
+  result[i,1]=rbind(letras[i])
+  result[i,2]=rbind(any(vocales==toupper(letras[i])))
+}
+colnames(result)=c("Letra","Es Vocal")
+print(result)
+```
+
+Para el tercer punto se creó un vector vocales con las vocales con el fin de que cada letra de la matriz se busque en el vector vocales, el proceso de búsqueda se hace con la función "any" la cual retorna TRUE o FALSE dependiendo si la letra está o no en el vector vocales (dentro de la función "any" se hace uso de la función "toupper" para asegurarse de que se van a comparar los mismos caracteres ASCII). En la matriz resultado se crearon dos columnas, una para colocar cada letra de la matriz y otra columna para el valor Booleano de lo que retorne la función "any". En cada iteración se van agregando a ambas columnas fila por fila hasta llegar al final de la matriz letras. Para finalizar se modifica el nombre de las columnas para darle un formato de impresión más legible.
+
+
+
+# Punto 4
+
+```{r}
+nombres=c("santiago","ortiz","arias","luisa","marcela","herrera","arias")
+vocales=c("A","E","I","O","U")
+palabras=c()
+for (i in 1:length(nombres)){
+  palabra="-"
+  nombre=nombres[i]
+  for(j in strsplit(nombre,NULL)[[1]]){
+    if(toupper(j) %in% vocales){
+      caracter="V"
+    }else{
+      caracter="C"
+    }
+    palabra=paste0(palabra,caracter,"-")
+  }
+  palabras[i]=rbind(palabra)
+}
+result=sprintf("%s es %s",nombres,palabras)
+print(result)
+```
+
+Para el punto 4 se encuentra una mejor opción para la búsqueda de letra en el vector vocales, esta es %in% el cual es muy similar(prácticamente la misma) a la función "in" en Python para buscar un elemento en un vector, lista, matrix, etc.
+
+Para el vector nombres que son las palabras que se van a procesar se usaron los mismos nombres propuestos por el taller.
+
+Para recorrer el vector nombres se creó un ciclo que recorra todos los elementos del vector y los asigne a la variable nombre para luego usar la función recomendada por el profesor "strsplit" la cual se encargará de separar cada palabra en caracteres individuales y en forma de lista(que realmente no afecta en nada, ya que es una lista de un solo elemento: el carácter). Una vez que ya se analiza carácter por carácter de cada palabra, se asigna un estado o valor de "V" o "C" si el carácter es una vocal o consonante, respectivamente. Luego se une en una sola palabra el valor de cada carácter para crear un tipo de palabra en "formato" Vocal-Consonante. Finalmente, se agrega al vector palabras para guardar el resultado de las palabras.
+
+Pd: aquí se usó la función "paste0" para variar un poco.
+
+
+
+# Punto 5
+
+```{r}
+tabla = function(numero){
+for(i in 1:10){
+  result=sprintf("%d X %d = %d",numero,i,numero*i)
+  print(result)
+  }
+}
+numero=5
+tabla(numero)
+```
+
+Para el punto 5 se creó una función tabla para calcular la tabla de multiplicar del número pedido desde 1 hasta 10, esto se hace mediante un ciclo que vaya desde 1 a 10 y multiplicando al número pedido, dentro del ciclo se imprime usando primero a la función sprintf para darle un formato a las tablas de multiplicar.
+
+
+
+# Punto 6
+
+```{r}
+factorial = function(n){
+  if (n == 0 || n==1 ){
+    return(1)
+  }else{
+    return(n*factorial(n-1))
+  }
+}
+
+err = function(xnew,xold){
+  return(abs((xnew-xold)/xnew))
+}
+
+euler = function(tol){
+  n=0
+  xold=0
+  xnew=1
+  facto=factorial(n)
+  error= err(xnew,xold)
+  while( error > tol){
+    n = n + 1
+    xold = xnew
+    xnew = xnew + 1/(factorial(n))
+    error=err(xnew,xold)
+    if (error<tol){
+      break
+    }
+  }
+  return(list(n,xnew))
+}
+
+tol=10**(-7)
+lista = euler(tol)
+result1 = sprintf("La Aproximacion se encontró en la iteracion: %d",lista[[1]])
+result2 = sprintf("Mientras que el valor estimado de e es: %.10f",lista[[2]])
+print(result1)
+print(result2)
+```
+
+Para el punto 6 se utiliza el conocimiento aprendido en la materia de métodos numéricos y se crean dos funciones claves, la primera es err para calcular el error que hay entre cada valor estimado y el valor anteriormente estimado, y la segunda función es euler para hacer la aproximación del valor de euler. En la segunda función se usa un ciclo while, ya que la sumatoria de 1/n! (Aquí n! se calcula con la función ya creada en el punto 1) va desde n=0 hasta infinito, por lo que la función solo parará hasta que el error sea más pequeño que la tolerancia. La razón de que cada estimación nueva se calcule con la anterior es para saber que tanto error hay entre los dos datos, entre más pequeño sea este indica que la función está convergiendo hacia un valor en específico.
+
+Finalmente, se imprime con formato de 10 decimales para ver como influye la tolerancia (esto en caso de querer visualizar que tan diferente es el valor con respecto a valores anteriores) la lista que contiene la iteración en que fue encontrada la aproximación y el respectivo valor encontrado.
+</div>

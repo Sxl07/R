@@ -1,0 +1,87 @@
+---
+title: 'Clase3: Análisis Descriptivo de Datos'
+author: "Santiago Ortiz"
+date: "2024-08-28"
+output: html_document
+---
+
+# Ejercicio: Análisis de Datos
+
+Vamos a realizar la instalación y la carga de una librería para realizar lecturas de archivos en excel (xls, xlsx). Este paquete se denota "readxl" y allí se encuentra la función que nos permite leer archivos.
+
+```{r message=FALSE, warning=FALSE}
+# A continuación se instalará la librería
+# install.packages(c("readxl","e1071"), dependencies = T)
+library(readxl)
+library(e1071)
+```
+
+Ya tenemos el paquete listo para usar. Para leer archivos xls o xlsx debemos usar la función "read_excel". Vamos ahora a cargar el fichero de datos "Medifis".
+
+```{r message=FALSE, warning=FALSE}
+datos = read_excel("datos.xls", sheet = "Medifis", skip = 2)
+```
+
+Ya que hemos cargado el fichero Medifis, vamos ahora a seleccionar la variable a la cual le realizaremos el análisis descriptivo. Vamos a trabajar con la variable estatura:
+
+```{r}
+X = datos$`Estatura (cm)`
+```
+
+A continuación realizaremos el respectivo análisis:
+
+## Estadísticos de Centralidad
+
+Es un indicador que resume patrones de posicionamiento/localización de una muestra aleatoria. Entre estas tenemos: La media, mediana, percentiles/cuantiles, mínimo, máximo.
+
+```{r}
+media = mean(X)
+mediana = median(X)
+p25 = quantile(X, 0.25)
+p75 = quantile(X, 0.75)
+minimo = min(X)
+maximo = max(X)
+MC = c(media, mediana, p25, p75, minimo, maximo)
+print(MC)
+```
+
+## Estadísticos de Dispersión
+
+Es un indicador que resume patrones de variabilidad respecto a una métrica de localización de una muestra aleatoria. Entre estas tenemos: La varianza, desviación estándar, rango, rango intercuartil.
+
+```{r}
+varianza = var(X)
+desv.est = sd(X)
+rango = maximo - minimo
+rango.int = IQR(X)
+MD = c(varianza, desv.est, rango, rango.int)
+print(MD)
+```
+
+## Estadísticos de Forma
+
+Es un indicador que resume patrones de desplazamiento vertical y horizontal de una muestra aleatoria. Entre estas tenemos: El coeficiente de asimetría, coeficiente de curtosis.
+
+```{r}
+curtosis = e1071::kurtosis(X)
+asimetria = skewness(X)
+MF = c(curtosis, asimetria)
+print(MF)
+```
+
+## Histograma y Boxplot
+
+```{r}
+hist(X, main = "Histograma de las Estaturas", xlab = "Estatura (cm)", ylab = "Frecuencia")
+abline(v = media, lty = 2, lwd = 2, col = "red")
+abline(v = media + desv.est, lty = 2, lwd = 2, col = "orange3")
+abline(v = media - desv.est, lty = 2, lwd = 2, col = "orange3")
+boxplot(X, horizontal = T, main = "Boxplot de las Estaturas", xlab = "Estatura (cm)")
+abline(v = media, lty = 2, lwd = 2, col = "red")
+```
+
+
+
+
+
+
