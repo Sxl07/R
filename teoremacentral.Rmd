@@ -1,0 +1,65 @@
+---
+title: "Teorema central del limite"
+author: "Sebastián López"
+date: "2024-09-09"
+output: html_document
+---
+
+recordemos que el tcl nos dice, entre muchos otros resultados que si se tiene una coleccion de "m variables aleatorias independientes e identicamente distribuidad (iid: cada variable es independiente de las demas y todas provienen o son generadas por la misma distribucion de probabilidad de probabilidad), entonces el estadistico meddia muestral proviene asintoticamente de ina distribucion normal co media "mu"(media poblacional) y varianza "sigma cuadrado dividido n"(varianza poblacional divido la cantidad de variables aleatorias)
+
+ademas, tambien nos provee la distribucion de probabilidad asintotica de otros estadisticos muestrales como lo son la proporcion y la varianza muestral.a continuacion, realizaremos una simulacion para probar empiricamente que el TCL es cierto.
+
+## Ejemplo 1: probaremos la distribucion de la media muestral apartir de varaibles aleatorias que provienen de una distribucion normal.
+```{r}
+# 0) definir la poblacion de tamaño N
+N=10000
+mu=170
+sigma=10 
+poblacion = rnorm(N,mu,sigma)
+# 1) debemos de generar esas "m" replicas o copias de la varible aleatoria, de tamaño "n"
+m = 10000
+n = 1000
+medias=rep(0,m)
+for(i in 1:m){
+  # muestra i esima
+  ind = sample(1:N,n,replace = F)
+  X= poblacion[ind] 
+  medias[i]=mean(X)
+}
+a=sort(rnorm(10000,mu,sigma/sqrt(n)))
+hist(medias,freq = F)
+lines(a,dnorm(a,mu,sigma/sqrt(n)))
+#2) omparemos la media y la desviacion muestral con las teoricas
+val.sam=c(mean(medias),var(medias))
+val.teo=c(mu,(sigma^2/n))
+print(rbind(val.sam,val.teo))
+
+```
+
+```{r}
+# 0) definir la poblacion de tamaño N
+N=10000
+lamb = 15
+mu=1/lamb
+sigma=1/(lamb)
+poblacion = rexp(N,lamb)
+# 1) debemos de generar esas "m" replicas o copias de la varible aleatoria, de tamaño "n"
+m = 10000
+n = 1000
+medias=rep(0,m)
+for(i in 1:m){
+  # muestra i esima
+  ind = sample(1:N,n,replace = F)
+  X= poblacion[ind] 
+  medias[i]=mean(X)
+}
+a=sort(rnorm(10000,mu,sigma/sqrt(n)))
+hist(medias,freq = F)
+lines(a,dnorm(a,mu,sigma/sqrt(n)))
+#2) comparemos la media y la desviacion muestral con las teoricas
+val.sam=c(mean(medias),var(medias))
+val.teo=c(mu,(sigma^2/n))
+print(rbind(val.sam,val.teo))
+
+```
+
