@@ -2,7 +2,9 @@
 title: "Inferencia Estadistica"
 author: "Sebastián López Montenegro (97500) - Juan Pablo Silvestre (99127)"
 date: "2024-09-24"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 subtitle: Talller 1 Corte 2
 ---
 
@@ -20,7 +22,7 @@ Se definieron las variables datos (datos del conjunto donde x=2), n (tamaño de 
 ```{r}
 ME.t=qt(1-(alpha/2),n-1)*s/sqrt(n)
 ic.t=c(x.bar-ME.t,x.bar+ME.t)
-cat("Intervalo de confianza: [",ic.t,"] con una confianza de",(1-alpha)*100,"%")
+cat("Intervalo de confianza: [",ic.t,"] minutos con una confianza de",(1-alpha)*100,"%")
 ```
 Luego de calcular el margen de error, se halla el margen de error para encontrar el intervalo de confianza, esto siguiendo las siguientes formulas:
 
@@ -33,6 +35,8 @@ ME \rightarrow \frac{t_{(1-\alpha/2)}\hat{\sigma}}{\sqrt{n}}
 \[
 \mu \rightarrow \left[ \bar{x}-\frac{t_{(1-\alpha/2)}\hat{\sigma}}{\sqrt{n}},\bar{x}+\frac{t_{(1-\alpha/2)}\hat{\sigma}}{\sqrt{n}} \right]
 \]
+
+Con un nivel de confianza del 95% (con un nivel de significancia del 5%) hay evidencia muestral suficiente para determinar el IC para la media real/poblacional del tiempo que toma resolver problemas con complejidad 2, en minutos. Este intervalo será [16.5158 21.4841] Minutos. 
 
 # Punto 2
 ## Funcion para calcular el intervalo de confianza (Proporcion)
