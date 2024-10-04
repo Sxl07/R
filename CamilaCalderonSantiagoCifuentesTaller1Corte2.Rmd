@@ -1,0 +1,73 @@
+---
+title: 'Inferencia Estadística: Taller 1 Corte 2'
+author: "Maria Camila Calderon (116867) - Santiago Cifuentes Lopez (69629)"
+date: "2024-09-28"
+output: html_document
+---
+
+# Punto 4
+```{r}
+S=4500
+alpha=0.05
+ME = 500
+n = ceiling((qnorm(1-(alpha/2))*S/ME)^2)
+cat("Se requieren", n, "muestras para garantizar un error de", ME, "dolares")
+
+```
+Se realizó el despeje de la formula de error para hallar "n", y se encontró que el minimo de muestras para realizar la estimacion con una confianza del 95%, debe ser 312 muestras.
+
+```{r}
+datos=c(38.5, 42.1, 40.3, 37.8, 45.6, 41.2, 39.7, 43.5, 40.0, 39.8,
+38.9, 44.1, 40.6, 37.9, 41.7, 42.5, 39.1, 40.9, 41.4, 43.0)
+media=mean(datos)
+alpha=0.05
+s=sd(datos)
+n = length(datos)
+ME = qnorm(1-(alpha/2))*s/sqrt(n)
+IC = c(media - ME, media + ME)
+cat("El intervalo de confianza es: [",IC,"]")
+```
+Para hallar el intervalo de confianza despues de tener una muestra de datos, se halló la media muestral y se calculo el margen de error para encontrar el intervalo de confianza.
+Con una confianza de 95% el ingreso medio poblacional/real estará entre [40.0086, 41.8514] miles de dolares.
+
+# Punto 5
+```{r}
+alpha = 0.01
+p = 75 / 150
+n = 150
+ME = 0.02 
+
+n = ceiling( p * (1 - p) * (qnorm(1 - alpha / 2) / ME) ^ 2 )
+
+cat("Se requieren", n, "muestras para garantizar un margen de error de", ME)
+```
+Se realizó el despeje de la formula del margen error de proporcion, se halló p (que vendria siendo el tipo de dato a analizar/personas que apoyan la ley, sobre el numero de muestras) para hallar "n", y se encontró que el minimo de muestras para realizar la estimacion con una confianza del 99%, debe ser 4147 muestras.
+
+```{r}
+alpha = 0.01
+p = 720 / 1200
+n = 1200
+
+ME = qnorm(1 - alpha / 2) * sqrt((p * (1 - p)) / n)
+IC = c(p - ME, p + ME)
+
+cat("El intervalo de confianza es: [",IC,"]")
+```
+Para hallar el intervalo de confianza, se halló la proporcion y se calculo el margen de error para encontrar el intervalo de confianza.
+Con una confianza de 99% la propocion de apoyo poblacional/real estará entre [0.5635, 0.6364].
+
+# Punto 6
+```{r}
+datos=c(18, 25, 22, 19, 30, 27, 20, 28, 23, 21, 24, 26, 31, 19, 29, 21, 22, 27, 25, 20,
+23, 28, 24, 19, 30, 26, 27, 22, 21, 29, 18, 31, 25, 20, 23, 19, 27, 22, 24, 28,
+26, 20, 23, 21, 29, 24, 19, 30, 22, 28)
+media=mean(datos)
+alpha=0.05
+s=sd(datos)
+n = length(datos)
+ME = qnorm(1-(alpha/2))*s/sqrt(n)
+IC = c(media - ME, media + ME)
+cat("El intervalo de confianza es: [",IC,"]")
+```
+Para hallar el intervalo de confianza, se halló la media muestral y se calculo el margen de error para encontrar el intervalo de confianza.
+Con una confianza de 95% la media poblacional/real de la reduccion de colesterol estará entre [23.04008 , 25.15992] mg/dL.
